@@ -8,11 +8,15 @@ import spiffy.core.util.TwoDHashMap;
 public class ShortestPath {
 	
 	private Integer dimensionOfMap;
-	
 	private TwoDHashMap<Integer, Integer, Integer> distances;
 	private TwoDHashMap<Integer, Integer, Integer> predecessors;
+	private String file;
 	
-	public void solveShortestPathProblem(String file){
+	public ShortestPath(String file){
+		this.file = file;
+	}
+	
+	public void solveShortestPathProblem(){
 		List<Integer[]> sourceData = SpUtils.readFile(file);
 		setDimensionOfMap(sourceData);
 		initDistances(sourceData);
@@ -86,12 +90,6 @@ public class ShortestPath {
 			SpUtils.print2dMap(distances, dimensionOfMap, "dimenstions / k = " + k);
 			SpUtils.print2dMap(predecessors, dimensionOfMap, "predecessors");
 		}
-		
-	}
-	
-	public static void main(String[] args) {
-		ShortestPath sp = new ShortestPath();
-		sp.solveShortestPathProblem("uebung5.txt");
 		
 	}
 }
