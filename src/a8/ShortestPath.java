@@ -1,22 +1,32 @@
 package a8;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
 import spiffy.core.util.TwoDHashMap;
-
+/**
+ * Represents a shortest path problem (all-to-all)
+ * The problem is constructed based on the data assigned
+ * through a text file passed as a construcor parameter
+ * 
+ * The text file has to contain data in the order of
+ * start vertex -- end vertex -- value of the edge separated by tabulator
+ * 
+ */
 public class ShortestPath {
 	
 	private Integer dimensionOfMap;
 	private TwoDHashMap<Integer, Integer, Integer> distances;
 	private TwoDHashMap<Integer, Integer, Integer> predecessors;
+	private List<Integer[]> changedFields = new ArrayList<>();
 	private String file;
 	
 	public ShortestPath(String file){
 		this.file = file;
 	}
 	
-	public void solveShortestPathProblem(){
+	public void solve(){
 		List<Integer[]> sourceData = SpUtils.readFile(file);
 		setDimensionOfMap(sourceData);
 		initDistances(sourceData);
@@ -25,7 +35,7 @@ public class ShortestPath {
 		SpUtils.print2dMap(predecessors, dimensionOfMap, "Initial predecessors with dimension: " + dimensionOfMap);
 		System.out.println();
 		System.out.println("Solution step by step:");
-		solve();
+		solveShortestPathProblem();
 		
 	}
 	
@@ -67,12 +77,17 @@ public class ShortestPath {
 		}
 		dimensionOfMap = sortedVertexes.last();
 	}
-
-	private void solve(){
+	/**
+	 * Solves the shortest path problem through iterating over all fields of
+	 * the dimensions map
+	 * Updates the predecessor map 
+	 */
+	private void solveShortestPathProblem(){
 		for(int k = 1; k <= dimensionOfMap; k++){
 			for(int i = 1; i <= dimensionOfMap; i++){
 				for(int j = 1; j <= dimensionOfMap; j++){
 					int sum;
+					// Handles the problem of calculation with infinity
 					if(distances.get(i,k) == Integer.MAX_VALUE || distances.get(k, j) == Integer.MAX_VALUE){
 						sum = Integer.MAX_VALUE;
 					}else{
@@ -83,10 +98,15 @@ public class ShortestPath {
 						predecessors.set(i, j, predecessors.get(k, j));
 					}
 					int d_ij = Math.min(distances.get(i,j), sum);
+					if(d_ij < distances.get(i, j)){
+						changedFields.add(new Integer[]{i,j,distances.get(i, j),d_ij});
+					}
 					distances.set(i, j, d_ij);
 				}
 			}
-			
+			if(k <= 3){
+				SpUtils.printChangedValues(changedFields);
+			}
 			SpUtils.print2dMap(distances, dimensionOfMap, "dimenstions / k = " + k);
 			SpUtils.print2dMap(predecessors, dimensionOfMap, "predecessors");
 		}

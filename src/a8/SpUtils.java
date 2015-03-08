@@ -43,13 +43,30 @@ public class SpUtils {
 		return content;
 	}
 	
-	
+	public static void printChangedValues(List<Integer[]> list){
+		System.out.println("Shorened values:");
+		for(Integer[] item : list){
+			String old = (item[2] == Integer.MAX_VALUE)?("oo"):(item[2].toString());
+			String curr = (item[3] == Integer.MAX_VALUE)?("oo"):(item[3].toString());
+			System.out.format("Pos [%3d,%3d]:    %3s --> %3s%n", item[0], item[1], old, curr);
+		}
+	}
 	
 	public static void print2dMap(TwoDHashMap<Integer, Integer, Integer> map, int dimension, String message){
 		System.out.println("______________________________________");
 		System.out.println(message);
 		for(int i = 1; i <= dimension; i++){
+			if(i == 1){
+				System.out.format("[%3s]", "-");
+				for(int columns = 1; columns <= dimension; columns++){
+					System.out.format("[%3s]", columns);
+				}
+				System.out.println();
+			}
 			for(int j = 1; j <= dimension; j++){
+				if(j == 1){
+					System.out.format("[%3s]", i);
+				}
 				System.out.format("%5s", (map.get(i, j) == Integer.MAX_VALUE)?("oo"):(map.get(i, j)).toString());
 			}
 			System.out.println();
