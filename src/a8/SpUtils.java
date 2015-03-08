@@ -11,9 +11,21 @@ import java.util.List;
 import java.util.TreeSet;
 
 import spiffy.core.util.*;
-
+/**
+ * Klasse zur Unterstützung des Floy Warshall Algorithmus
+ * Methoden zum einlesen einer Textdatei
+ * und zum Ausgeben von Ergebnissen
+ * @author hebner
+ *
+ */
 public class SpUtils {
-	
+	/**
+	 * Liest ein Textfile ein
+	 * Daten müssen über den Tabulator getrennt sein
+	 * 3 Spalten wie folgt: Startknoten, Endknoten, Gewicht
+	 * @param path
+	 * @return
+	 */
 	public static List<Integer[]> readFile(String path){
 		
 		final File file = new File(path);
@@ -36,15 +48,11 @@ public class SpUtils {
 			System.out.println("Problems while reading file " + path);
 		}
 		
-//		for(int i = 0; i < content.size(); i++){
-//			System.out.println(content.get(i)[0] + "     " + content.get(i)[1] + "     " + content.get(i)[2]);
-//		}
-		
 		return content;
 	}
 	
-	public static void printChangedValues(List<Integer[]> list){
-		System.out.println("Shorened values:");
+	public static void printChangedValues(List<Integer[]> list, String message){
+		System.out.println(message);
 		for(Integer[] item : list){
 			String old = (item[2] == Integer.MAX_VALUE)?("oo"):(item[2].toString());
 			String curr = (item[3] == Integer.MAX_VALUE)?("oo"):(item[3].toString());
