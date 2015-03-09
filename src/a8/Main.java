@@ -12,7 +12,11 @@ public class Main {
 		 * Daten müssen über den Tabulator getrennt sein
 		 * 3 Spalten wie folgt: Startknoten, Endknoten, Gewicht
 		 */
-		ShortestPath sp = new ShortestPath("Daten28.txt");
+		String daten = "src/Daten8A.txt";
+		if(args.length > 0){
+			daten = args[0];
+		}
+		ShortestPath sp = new ShortestPath(daten);
 		sp.solve();
 	}
 }
