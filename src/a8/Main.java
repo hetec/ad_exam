@@ -10,7 +10,7 @@ public class Main {
 		 * Neues Problem erzeugen + Textdatei übergeben
 		 * Datei muss im Projektverzeichnis liegen
 		 * Daten müssen über den Tabulator getrennt sein
-		 * 3 Spalten wie folgt: Startknoten, Endknoten, Gewicht
+		 * 3 Spalten wie folgt: Startknoten <TAB> Endknoten <TAB> Gewicht
 		 */
 		String daten = "src/Daten8A.txt";
 		if(args.length > 0){
