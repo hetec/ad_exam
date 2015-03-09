@@ -12,8 +12,8 @@ import spiffy.core.util.TwoDHashMap;
 public class ShortestPath {
 	private Integer dimensionOfMap;									//Speichert die Ausmaße des zu erzeugenden Array 
 																	//Wird aus eingelesenen Daten ermittelt
-	private TwoDHashMap<Integer, Integer, Integer> distances;		//Map zum speichern der Wege
-	private TwoDHashMap<Integer, Integer, Integer> predecessors;	//Map zum speichern dre Vorgänger
+	private Integer[][] distances;									//Map zum speichern der Wege
+	private Integer[][] predecessors;								//Map zum speichern dre Vorgänger
 	private List<Integer[]> changedFields = new ArrayList<>();		//Liste zum speichern der geänderten Werte
 	private String file;
 	
@@ -45,19 +45,19 @@ public class ShortestPath {
 	 * @param sourceData
 	 */
 	private void initDistances(List<Integer[]> sourceData){
-		distances = new TwoDHashMap<Integer, Integer, Integer>();
+		distances = new Integer[dimensionOfMap+1][dimensionOfMap+1];
 		for(int i = 1; i <= dimensionOfMap; i++){
 			for(int j = 1; j <= dimensionOfMap; j++){
 				if(i == j){
-					distances.set(i,j,0);
+					distances[i][j] = 0;
 				}else{
-					distances.set(i,j,Integer.MAX_VALUE);
+					distances[i][j] = Integer.MAX_VALUE;
 				}
 			}
 		}
 		for(Integer[] row : sourceData){
 			if(row[0] != row[1])
-				distances.set(row[0], row[1], row[2]);
+				distances[row[0]][row[1]] = row[2];
 		}
 	}
 	
@@ -68,15 +68,15 @@ public class ShortestPath {
 	 * @param sourceData
 	 */
 	private void initPedecessors(List<Integer[]> sourceData){
-		predecessors = new TwoDHashMap<Integer, Integer, Integer>();
+		predecessors = new Integer[dimensionOfMap+1][dimensionOfMap+1];
 		for(int i = 1; i <= dimensionOfMap; i++){
 			for(int j = 1; j <= dimensionOfMap; j++){
-				predecessors.set(i,j,0);
+				predecessors[i][j] = 0;
 			}
 		}
 		for(Integer[] row : sourceData){
 			if(row[0] != row[1])
-				predecessors.set(row[0], row[1], row[0]);
+				predecessors[row[0]][row[1]] = row[0];
 		}
 	}
 	
@@ -106,23 +106,25 @@ public class ShortestPath {
 					int sum;
 					// Ermittlung der Summe der jeweils zu betrachtenden Matrixelemente
 					// Wenn der Wert unendlich ist wird als Summe auch unendlich gesetzt - Vermeidung von Überlauffehlern
-					if(distances.get(i,k) == Integer.MAX_VALUE || distances.get(k, j) == Integer.MAX_VALUE){
+					if(distances[i][k] == Integer.MAX_VALUE || distances[k][j]== Integer.MAX_VALUE){
 						sum = Integer.MAX_VALUE;
 					}else{
-						sum = distances.get(i,k) + distances.get(k, j);
+						sum = distances[i][k] + distances[k][j];
 					}
 					// Festhalten der Vorgänger
-					if(distances.get(i, j) > sum){
-						predecessors.set(i, j, predecessors.get(k, j));
+					if(distances[i][j] > sum){
+						predecessors[i][j] = predecessors[k][j];
 					}
 					// Test ob aktuelles Element kleiner als ermittelte Summe --> Min()
-					int d_ij = Math.min(distances.get(i,j), sum);
+					int d_ij = Math.min(distances[i][j], sum);
+					//int d_ij = Math.min(distances.get(i,j), sum);
 					// Nur zum Herrausschreiben der geänderten Werte für die Aufgabe
-					if(d_ij < distances.get(i, j)){
-						changedFields.add(new Integer[]{i,j,distances.get(i, j),d_ij});
+					if(d_ij < distances[i][j]){
+						changedFields.add(new Integer[]{i,j,distances[i][j],d_ij});
 					}
 					// Setzen des neuen Wertes
-					distances.set(i, j, d_ij);
+					distances[i][j] = d_ij;
+
 				}
 			}
 			if(k <= 3){

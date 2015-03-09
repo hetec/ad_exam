@@ -60,7 +60,7 @@ public class SpUtils {
 		}
 	}
 	
-	public static void print2dMap(TwoDHashMap<Integer, Integer, Integer> map, int dimension, String message){
+	public static void print2dMap(/*TwoDHashMap<Integer, Integer, Integer>*/ Integer[][] map, int dimension, String message){
 		System.out.println("______________________________________");
 		System.out.println(message);
 		for(int i = 1; i <= dimension; i++){
@@ -75,7 +75,8 @@ public class SpUtils {
 				if(j == 1){
 					System.out.format("[%3s]", i);
 				}
-				System.out.format("%5s", (map.get(i, j) == Integer.MAX_VALUE)?("oo"):(map.get(i, j)).toString());
+				System.out.format("%5s", (map[i][j] == Integer.MAX_VALUE)?("oo"):(map[i][j]).toString());
+//				System.out.format("%5s", (map.get(i, j) == Integer.MAX_VALUE)?("oo"):(map.get(i, j)).toString());
 			}
 			System.out.println();
 		}
