@@ -25,6 +25,7 @@ public class SpUtils {
 	 * Liest ein Textfile ein
 	 * Daten müssen über den Tabulator getrennt sein
 	 * 3 Spalten wie folgt: Startknoten, Endknoten, Gewicht
+	 * @autor reinhardt
 	 * @param path
 	 * @return
 	 */
@@ -52,7 +53,12 @@ public class SpUtils {
 		
 		return content;
 	}
-	
+	/**
+	 * Ausgabe der geänderten Werte in der Distanzmatrix
+	 * @autor hebner
+	 * @param list
+	 * @param message
+	 */
 	public static void printChangedValues(List<Integer[]> list, String message){
 		System.out.println();
 		System.out.println(message);
@@ -64,7 +70,12 @@ public class SpUtils {
 		}
 		System.out.println();
 	}
-	
+	/**
+	 * Ausgabe der Distanz und Vorgängermatrix
+	 * @autor hebner
+	 * @param list
+	 * @param message
+	 */
 	public static void print2dMap(Integer[][] map, int dimension, String message){
 		System.out.println();
 		System.out.println("______________________________________");
@@ -83,7 +94,7 @@ public class SpUtils {
 				if(j == 1){
 					System.out.format("[%3s]", i);
 				}
-				System.out.format("%5s", (map[i][j] == Integer.MAX_VALUE)?("\u221E"):(map[i][j]).toString());
+				System.out.format("%5s", (map[i][j] == Integer.MAX_VALUE)?("oo"):(map[i][j]).toString());
 			}
 			System.out.println();
 		}

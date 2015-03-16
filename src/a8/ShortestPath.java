@@ -24,6 +24,7 @@ public class ShortestPath {
 	 * Haupfunktion zum lösen des gegebenen Problems
 	 * Ruft private Methoden auf
 	 * Gibt Informationen aus
+	 * @author reinhardt
 	 */
 	public void solve(){
 		List<Integer[]> sourceData = SpUtils.readFile(file);
@@ -43,6 +44,7 @@ public class ShortestPath {
 	 * Wird mit den Werten der eingelesenen Datei befüllt
 	 * Unendlich wird durch den maximalen Integerwert repräsentiert
 	 * @param sourceData
+	 * @author hebner
 	 */
 	private void initDistances(List<Integer[]> sourceData){
 		distances = new Integer[dimensionOfMap+1][dimensionOfMap+1];
@@ -66,6 +68,7 @@ public class ShortestPath {
 	 * Wird mit den Werten der eingelesenen Datei befüllt
 	 * Nicht vorhandene Vorgänger werden durch Nullen repräsentiert
 	 * @param sourceData
+	 * @author hebner
 	 */
 	private void initPedecessors(List<Integer[]> sourceData){
 		predecessors = new Integer[dimensionOfMap+1][dimensionOfMap+1];
@@ -84,6 +87,7 @@ public class ShortestPath {
 	 * Ermittelt die Ausmasse für die Matrix
 	 * Wird für die Schleifen und die Ausgabe benötigt
 	 * @param sourceData
+	 * @author reinhardt
 	 */
 	private void setDimensionOfMap(List<Integer[]> sourceData){
 		TreeSet<Integer> sortedVertexes = new TreeSet<Integer>();
@@ -98,6 +102,8 @@ public class ShortestPath {
 	 * Drei Verschachtelte Schleifen:
 	 * Zwei zum ablaufen des 2D Arrays benötigt
 	 * Eine um die Anzahl der Zwischenkonten zu erhöhen
+	 * @author hebner
+	 * @author reinhardt
 	 */
 	private void solveShortestPathProblem(){
 		for(int k = 1; k <= dimensionOfMap; k++){
